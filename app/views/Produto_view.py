@@ -15,8 +15,8 @@ class Produto_Terminal_View:
         print(f"0 - sair")
         print(Fore.CYAN + "="*50)
         try:
-            return init(input{"Escolhe uma opção: "})
-            except ValueError:
+            return int(input("Escolhe uma opção: "))
+        except ValueError:
                 return -1
 
     def ler_dados_produto(self):
@@ -34,11 +34,16 @@ class Produto_Terminal_View:
         if not produtos:
             print("Nenhum produto cadastrado")
             return
-        print(f"{'ID'}:<4 | {p.nome:<20} | {p._estoque:<5} | {p.preco:<10}")
-        print("-"*48)
+        print(f"{'ID':<4} | {'Nome':<20} | {'Estoque':<7} | {'Preço':<10}")
+        print("-" * 52)
+        for p in produtos:
+         print(f"{'ID'}:<4 | {p.nome:<20} | {p._estoque:<5} | {p.preco:<10}")
+         print("-"*48)
 
     def exibir_mensagem(self, mensagem, sucesso=True):
         cor = Fore. GREEN   if sucesso else Fore.RED
         print(cor + f"\n[STATUS] {mensagem}\n")
 
         
+
+

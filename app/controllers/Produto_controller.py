@@ -1,5 +1,5 @@
 import os
-from app.models.produto import Produto
+from app.models.Produto import Produto
 
 class Produto_Controller:
     def __init__(self, dao, view):

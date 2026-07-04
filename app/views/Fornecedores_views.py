@@ -1,0 +1,42 @@
+from colorama import init, Fore, Style
+
+init(autoreset=True)
+
+class Fornecedores_Terminal_View:
+    def __init__(self):
+        self.titulo_sistema = "=== CRUD DE FORNECEDORES (MVC) ==="
+
+    def renderizar_menu(self):
+        print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
+        print(f"1 - Cadastrar Fornecedores")
+        print(f"2 - Listar Fornecedores")
+        print(f"3 - Atulizar Fornecedores")
+        print(f"4 - Excluir Fornecedores")
+        print(f"0 - Sair")
+        print(Fore.CYAN + "="*50)
+        try:
+            return int(input("Escolhe uma opção: "))
+        except ValueError:
+            return -1
+        
+    def ler_dados_fornecedores(self):
+        print(Fore.CYAN + Style.BRIGHT + "=== CADASTRO DE FORNECEDORES ===")
+        razao_social = input("Digite a razao social da sua empresa: ")
+        nome_fantasia = input("Digite o nome fantasia da empresa: ")        
+        cnpj = input("Digite o CNPJ da empresa: ")
+        return razao_social, nome_fantasia, cnpj
+    
+    def ler_id(self):
+        return input("Digite o ID do Fornecedor")
+    
+    def exibir_fornecedores(self, fornecedores):
+        print(Fore.YELLOW + "\n--- TABELA DE FORNECEDORES ---")
+        if not fornecedores:
+            print("Nenhum Fornecedor Cadastrado")
+            return
+        print(f"{'ID':<4} | {'RAZAO SOCIAL':<34} | {'CNPJ':<18}")
+        print("-"*50)
+
+    def exibir_mensagem(self, mensagem, seucesso=True):
+        cor = Fore. GREEN if seucesso else Fore.RED
+        print(cor + f"\n[STATUS] {mensagem}\n")

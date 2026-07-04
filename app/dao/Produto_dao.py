@@ -4,12 +4,12 @@ class Produto_dao:
         self.__novo__id = 1
 
     def save(self, produtos):
-        self.__produtos.append(produto)
+        self.__produtos.append(produtos)
         self.__novo__id += 1
-        return produto
+        return produtos
 
     def get_all(self):
-        return list(self.__produtos):
+        return list(self.__produtos)
 
     def get_by_id(self, id):
         for p in self.__produtos:
