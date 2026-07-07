@@ -4,6 +4,7 @@ class Produto_dao:
         self.__novo__id = 1
 
     def save(self, produtos):
+        produtos._id = self.__novo__id
         self.__produtos.append(produtos)
         self.__novo__id += 1
         return produtos

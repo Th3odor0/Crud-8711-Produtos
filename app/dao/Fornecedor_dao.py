@@ -3,17 +3,18 @@ class Fornecedores_dao():
         self.__fornecedores = []
         self.__novo_id = 1
 
-    def save(self, fornecedores):
-        self.__nome_fantasia.append(fornecedores)
-        self.__id += 1
-        return fornecedores
+    def save(self, fornecedor):
+        fornecedor.id = self.__novo_id
+        self.__fornecedores.append(fornecedor)
+        self.__novo_id += 1
+        return fornecedor
     
     def get_all(self):
         return list(self.__fornecedores)
     
     def get_by_id(self, id):
         for f in self.__fornecedores:
-            if f._id == id:
+            if f.id == id:
                 return f
             return None
         

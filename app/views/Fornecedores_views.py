@@ -21,10 +21,11 @@ class Fornecedores_Terminal_View:
         
     def ler_dados_fornecedores(self):
         print(Fore.CYAN + Style.BRIGHT + "=== CADASTRO DE FORNECEDORES ===")
-        razao_social = input("Digite a razao social da sua empresa: ")
+        razao_social = input("Digite a razão social da empresa: ")
         nome_fantasia = input("Digite o nome fantasia da empresa: ")        
         cnpj = input("Digite o CNPJ da empresa: ")
-        return razao_social, nome_fantasia, cnpj
+        sla_atendimento = input("Digite o SLA do fornecedor: ")
+        return razao_social, nome_fantasia, cnpj, sla_atendimento
     
     def ler_id(self):
         return input("Digite o ID do Fornecedor")
@@ -34,8 +35,11 @@ class Fornecedores_Terminal_View:
         if not fornecedores:
             print("Nenhum Fornecedor Cadastrado")
             return
-        print(f"{'ID':<4} | {'RAZAO SOCIAL':<34} | {'CNPJ':<18}")
-        print("-"*50)
+        print(f"{'ID':<4} | {'NOME':<31} | {'CNPJ':<18}")
+        print("-"*62)
+        for f in fornecedores:
+            print(f"{f.id:<4} | {f.razao_social:<20} | {f.nome_fantasia:<20} | {f.cnpj:<18} | {f.sla_atendimento:<17}")
+
 
     def exibir_mensagem(self, mensagem, seucesso=True):
         cor = Fore. GREEN if seucesso else Fore.RED
