@@ -1,28 +1,4 @@
-class Fornecedores_dao():
-    def __init__(self):
-        self.__fornecedores = []
-        self.__novo_id = 1
+from app.dao.Generic_dao import Generic_DAO
 
-    def save(self, fornecedor):
-        fornecedor.id = self.__novo_id
-        self.__fornecedores.append(fornecedor)
-        self.__novo_id += 1
-        return fornecedor
-    
-    def get_all(self):
-        return list(self.__fornecedores)
-    
-    def get_by_id(self, id):
-        for f in self.__fornecedores:
-            if f.id == id:
-                return f
-            return None
-        
-    def delete(self, id):
-        Fornecedores = self.get_by_id(id)
-        if Fornecedores:
-            self.__fornecedores.remove(Fornecedores)
-            return True
-        return False
-    def update(self, fornecedores_atualizado):
-        return True    
+class Fornecedores_dao(Generic_DAO):
+    pass

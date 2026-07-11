@@ -34,11 +34,11 @@ class Produto_Terminal_View:
         if not produtos:
             print("Nenhum produto cadastrado")
             return
-        print(f"{'ID':<4} | {'Nome':<20} | {'Estoque':<7} | {'Preço':<10}")
-        print("-" * 52)
+        print(f"{'ID':<4} | {'Nome':<20} | {'Estoque':<7} | {'Preço':<10} | {'VALOR EM ESTOQUE':<16}")
+        print("-" * 69)
         for p in produtos:
-         print(f"{p._id:<4} | {p._nome:<20} | {p._estoque:<5} | {p._preco:<10}")
-         print("-"*48)
+         print(f"{p._id:<4} | {p._nome:<20} | {p._estoque:<5} | {p._preco:<10} | {p.valor_estoque:<16.2}")
+         print("-"*69)
 
     def exibir_mensagem(self, mensagem, sucesso=True):
         cor = Fore. GREEN   if sucesso else Fore.RED
