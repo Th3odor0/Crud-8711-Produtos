@@ -1,6 +1,6 @@
 class Produto:
     def __init__(self, id, nome, estoque, preco):
-        self.__id = id
+        self._id = id
         self._nome = nome  
         self._estoque = estoque
         self._preco = preco
@@ -18,11 +18,11 @@ class Produto:
 
     @property
     def id(self):
-        return self.__id
+        return self._id
     
     @id.setter
     def id(self, novo_id):
-        self.__id = novo_id
+        self._id = novo_id
 
     @property 
     def nome(self):
@@ -50,5 +50,5 @@ class Produto:
 
     @property
     def valor_estoque(self):
-        return self.preco * self.estoque
+        return self._preco * self._estoque
     

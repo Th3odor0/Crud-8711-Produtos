@@ -24,7 +24,7 @@ class Clientes_Terminal_View:
         nome = input("Digite o nome: ")
         email = input("Digite o seu email: ")        
         data_nascimento = input("Digite a data de nascimento: ")
-        limite_credito = input("Digite o limite: ")
+        limite_credito = float(input("Digite o limite: "))
         return nome, email, data_nascimento, limite_credito
     
     def ler_id(self):
@@ -35,12 +35,12 @@ class Clientes_Terminal_View:
         if not clientes:
             print("Nenhum Cliente Cadastrado")
             return
-        print(f"{'ID':<4} | {'NOME':<25} | {'email':<18} | {'nascimento':<10} | {'Idade':<2} | {'limite':<10}")
+        print(f"{'ID':<4} | {'NOME':<25} | {'email':<18}  | {'Idade':<2} | {'limite':<10}")
         print("-"*100)
         for c in clientes:
-            print(f"{c.id:<4} | {c.nome:<20} | {c.email:<20} | {c.data_nascimento:<10} | {c.idade:2} | {c.limite_credito:<10}")
+            print(f"{c.id:<4} | {c.nome:<20} | {c.email:<20} | {c.idade:<5} | {c.limite_credito:<10}")
 
 
-    def exibir_mensagem(self, mensagem, seucesso=True):
-        cor = Fore. GREEN if seucesso else Fore.RED
+    def exibir_mensagem(self, mensagem, sucesso=True): 
+        cor = Fore.GREEN if sucesso else Fore.RED
         print(cor + f"\n[STATUS] {mensagem}\n")
