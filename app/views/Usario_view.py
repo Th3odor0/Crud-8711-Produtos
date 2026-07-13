@@ -34,10 +34,10 @@ class Usuarios_Terminal_View:
         if not usuarios:
             print("Nenhum Usuario Cadastrado")
             return
-        print(f"{'ID':<4} | {'NOME':<31} | {'CNPJ':<18} | {'DATA DE NASCIMENTO':<18}")
+        print(f"{'ID':<4} | {'NOME':<31} | {'EMAIL':<20} | {'CNPJ':<18} | {'DATA DE NASCIMENTO':<18}")
         print("-"*62)
         for f in usuarios:
-            print(f"{f.id:<4} | {f.nome:<20} | {f.email:<20} | {f.data_nascimento:<18}")
+            print(f"{f.id:<4} | {f.nome:<20} | {f.email:<20} | {f.cnpj:<18} | {f.data_nascimento:<18}")
 
 
     def exibir_mensagem(self, mensagem, seucesso=True):

@@ -23,7 +23,7 @@ class Produto_Terminal_View:
         print(Fore.CYAN + Style.BRIGHT + "=== CADASTRO DE PRODUTO ===")
         nome = input("Digite o nome do produto: ")
         estoque = int(input("Digite a quantidade em estoque: "))
-        preco = int(input("Digite o preço do produto: "))
+        preco = float(input("Digite o preço do produto: "))
         return nome, estoque, preco
 
     def ler_id(self):
@@ -37,7 +37,7 @@ class Produto_Terminal_View:
         print(f"{'ID':<4} | {'Nome':<20} | {'Estoque':<7} | {'Preço':<10} | {'VALOR EM ESTOQUE':<16}")
         print("-" * 69)
         for p in produtos:
-         print(f"{p.id:<4} | {p.nome:<20} | {p.estoque:<5} | {p.preco:<10f} | {p.valor_estoque:<16.2f}")
+         print(f"{p.id:<4} | {p.nome:<20} | {p.estoque:<7} | {p.preco:<10.2f} | {p.valor_estoque:<16.2f}")
          print("-"*69)
 
     def exibir_mensagem(self, mensagem, sucesso=True):

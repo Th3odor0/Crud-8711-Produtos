@@ -35,10 +35,10 @@ class Clientes_Terminal_View:
         if not clientes:
             print("Nenhum Cliente Cadastrado")
             return
-        print(f"{'ID':<4} | {'NOME':<25} | {'email':<18}  | {'Idade':<2} | {'limite':<10}")
+        print(f"{'ID':<4} | {'NOME':<20} | {'email':<18}  | {'Idade':<2} | {'limite':<10.2f}")
         print("-"*100)
         for c in clientes:
-            print(f"{c.id:<4} | {c.nome:<20} | {c.email:<20} | {c.idade:<5} | {c.limite_credito:<10}")
+            print(f"{c.id:<4} | {c.nome:<20} | {c.email:<20} | {c.idade:<2} | {c.limite_credito:<10.2f}")
 
 
     def exibir_mensagem(self, mensagem, sucesso=True): 
