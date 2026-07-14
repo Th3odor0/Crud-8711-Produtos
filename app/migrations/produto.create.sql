@@ -1,5 +1,5 @@
-create database mini_erpj;
-use mini_erpj;
+create database mini_erp;
+use mini_erp;
 
 create table produto(
 	id integer not null auto_increment,

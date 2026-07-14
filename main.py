@@ -1,5 +1,7 @@
 import os
 from colorama import init, Fore, Style
+from app.core.database import Database
+
 
 # Componentes de Fornecedores
 from app.dao.Produto_dao import Produto_dao
@@ -23,8 +25,10 @@ class ErpApplication:
         # Inicializa o colorama interno
         init(autoreset=True)
         
+        self.database = Database()
+
         # Inicialização centralizada dos ecossistemas (Container de Serviços manual)
-        self._dao_produtos = Produto_dao()
+        self._dao_produtos = Produto_dao(self.database)
         self._ctrl_produtos = Produto_Controller(dao=self._dao_produtos, view=Produto_Terminal_View())
         
         self._dao_fornecedores = Fornecedores_dao()
