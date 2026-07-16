@@ -60,16 +60,17 @@ class Produto_dao(DAO):
         cursor = conexao.cursor()
         sql = """
                 SELECT
-                ID
-                NOME
-                PRECO
+                ID,
+                NOME,
+                PRECO,
+                ESTOQUE
             FROM
                 PRODUTO
             WHERE
                 ID = %s
             """
         cursor.execute(sql,(id,))
-        registro = cursor.fecthone()
+        registro = cursor.fetchone()
         self._database.desconectar(cursor, conexao)
         if registro is None:
             return None
@@ -97,7 +98,7 @@ class Produto_dao(DAO):
                     produto.preco,
                     produto.id
         ))
-        cursor.commit()
+        conexao.commit()
         sucesso = cursor.rowcount > 0
         self._database.desconectar(cursor, conexao)
         return sucesso
@@ -109,7 +110,7 @@ class Produto_dao(DAO):
                 DELETE FROM PRODUTO
                 WHERE ID = %s 
         """
-        cursor.commit()
+        conexao.commit()
         sucesso = cursor.rowcount > 0
         self._database.desconectar(cursor, conexao)
         return sucesso

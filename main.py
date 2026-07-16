@@ -31,13 +31,13 @@ class ErpApplication:
         self._dao_produtos = Produto_dao(self.database)
         self._ctrl_produtos = Produto_Controller(dao=self._dao_produtos, view=Produto_Terminal_View())
         
-        self._dao_fornecedores = Fornecedores_dao()
+        self._dao_fornecedores = Fornecedores_dao(self.database)
         self._ctrl_fornecedores = Fornecedor_controller(dao=self._dao_fornecedores, view=Fornecedores_Terminal_View())
 
-        self._dao_usuarios = Usuario_dao()
+        self._dao_usuarios = Usuario_dao(self.database)
         self._ctrl_usuarios = Usuario_controller(dao=self._dao_usuarios, view=Usuarios_Terminal_View())
 
-        self._dao_cliente = cliente_dao()
+        self._dao_cliente = cliente_dao(self.database)
         self._ctrl_cliente = Cliente_controller(dao=self._dao_cliente, view=Clientes_Terminal_View())
 
 

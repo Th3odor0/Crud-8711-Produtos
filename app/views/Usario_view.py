@@ -36,8 +36,8 @@ class Usuarios_Terminal_View:
             return
         print(f"{'ID':<4} | {'NOME':<31} | {'EMAIL':<20} | {'CNPJ':<18} | {'DATA DE NASCIMENTO':<18}")
         print("-"*62)
-        for f in usuarios:
-            print(f"{f.id:<4} | {f.nome:<20} | {f.email:<20} | {f.cnpj:<18} | {f.data_nascimento:<18}")
+        for u in usuarios:
+            print(f"{u.id:<4} | {u.nome:<20} | {u.email:<20} ")
 
 
     def exibir_mensagem(self, mensagem, seucesso=True):
