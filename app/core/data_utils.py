@@ -26,9 +26,13 @@ class Data_Utils:
             return False
 
     @staticmethod
-    def calcular_idade(data_texto):
+    def calcular_idade(data):
         # Convertemos o texto recebido para um objeto date
-        data_inicio = Data_Utils.string_para_data(data_texto)
+        data_inicio = data
+        if isinstance(data, str):
+            data_inicio = Data_Utils.string_para_data(data)
+        elif not isinstance(data, date):
+            raise ValueError("A data esta em um formato invalido.")
         
         # Correção: Mudado de 'data.today()' para 'date.today()' da biblioteca nativa
         hoje = date.today()
