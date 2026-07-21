@@ -1,62 +1,65 @@
 import os
 from app.models.Cliente import Cliente
+from app.core.data_utils import Data_Utils
 
-class Cliente_controller:
+class Cliente_Controller:
     def __init__(self, dao, view):
         self.dao = dao
         self.view = view
-
+    
     def inicializar_sistema(self):
         while True:
             os.system('cls' if os.name == 'nt' else 'clear')
             opcao = self.view.renderizar_menu()
             if opcao == 0:
-                self.view.exibir_mensagem("Saindo do sistema...")
                 break
             elif opcao == 1:
                 try:
-                    nome, email, data_nascimento, limite_credito = self.view.ler_dados_Clientes()
-                    cliente = Cliente(None, nome, email, data_nascimento, limite_credito)
+                    nome, data_nascimento, limite_credito = self.view.ler_dados_cliente()
+                    cliente = Cliente(None,nome, Data_Utils.string_para_data(data_nascimento), limite_credito)
                     self.dao.save(cliente)
                     self.view.exibir_mensagem("Cliente cadastrado com sucesso!")
                 except ValueError:
-                    self.view.exibir_mensagem("Erro: Entrada invalida. tente novamente.", False)
-                input("Pressione Enter para continuar...")
-
+                    self.view.exibir_mensagem("Erro: Entrada inválida. Tente novamente.", False)
+                except KeyboardInterrupt:
+                    self.view.exibir_mensagem("Operação cancelada pelo usuário.", False)
+                
+            
             elif opcao == 2:
-                cliente = self.dao.get_all()
-                self.view.exibir_clientes(cliente)
-                input("Pressione Enter para continuar...")
-
+                clientes = self.dao.get_all()
+                self.view.exibir_clientes(clientes)
+                self.view.aguardar_entrada()
+            
             elif opcao == 3:
                 try:
-                    cliente = self.dao.get_all()
-                    self.view.exibir_clientes(cliente)
+                    clientes = self.dao.get_all()
+                    self.view.exibir_clientes(clientes)
                     id_cliente = int(self.view.ler_id())
                     cliente_existente = self.dao.get_by_id(id_cliente)
                     if cliente_existente:
-                        nome, email, data_nascimento, limite_credito = self.view.ler_dados_Clientes()
-                        cliente_existente.atualizar_dados(nome, email, limite_credito, data_nascimento)
+                        nome, data_nascimento, limite_credito = self.view.ler_dados_cliente()
+                        cliente_existente.atualizar_dados(nome, data_nascimento, limite_credito)
                         self.dao.update(cliente_existente)
                         self.view.exibir_mensagem("Cliente atualizado com sucesso!")
                     else:
-                        self.view.exibir_mensagem("Cliente não encontrado. ", False) 
+                        self.view.exibir_mensagem("Cliente não encontrado.", False) 
                 except ValueError as e:
                     self.view.exibir_mensagem(f"Erro: {str(e)}", False)
-                input("Pressione Enter para continuar...")
+                
+            
             elif opcao == 4:
                 try:
-                    cliente = self.dao.get_all()
-                    self.view.exibir_clientes(cliente)
+                    clientes = self.dao.get_all()
+                    self.view.exibir_clientes(clientes)
                     id_cliente = int(self.view.ler_id())
                     sucesso = self.dao.delete(id_cliente)
                     if sucesso:
-                        self.view.exibir_mensagem("Cliente excluido com sucesso!")
+                        self.view.exibir_mensagem("Cliente excluído com sucesso!")
                     else:
-                        self.view.exibir_mensagem("Cliente não encotrado.", False) 
+                        self.view.exibir_mensagem("Cliente não encontrado.", False)
                 except ValueError:
-                    self.view.exibir_mensagem("Erro: ID invalido", False) 
-                input("Pressione Enter para continuar...")
+                    self.view.exibir_mensagem("Erro: ID inválido", False)
+                
             else:
-                self.view.exibir_mensagem("Opção invalida. Tente novamente.", False)
-                input("Pressione Enter para continuar...")               
+                self.view.exibir_mensagem("Opção inválida. Tente novamente.", False)
+                

@@ -5,45 +5,55 @@ init(autoreset=True)
 class Produto_Terminal_View:
     def __init__(self):
         self.titulo_sistema = "=== CRUD DE PRODUTOS (MVC) ==="
-
+    
     def renderizar_menu(self):
         print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
         print(f"1 - Cadastrar produto")
         print(f"2 - Listar produtos")
-        print(f"3 - Atualizar produtos")
-        print(f"4 - Excluir produtos")
-        print(f"0 - sair")
+        print(f"3 - Atualizar produto")
+        print(f"4 - Excluir produto")
+        print(f"0 - Sair")
         print(Fore.CYAN + "="*50)
         try:
-            return int(input("Escolhe uma opção: "))
+            return int(input("Escolha uma opção: "))
         except ValueError:
-                return -1
+            return -1
+    def ler_campo(self, rotulo, valor_atual=None):
+        if valor_atual is not None:
+            prompt = f"{rotulo} [{Fore.GREEN}{valor_atual}{Style.RESET_ALL}]: "
+        else:
+            prompt = f"{rotulo}: "
+        valor = input(prompt)
+        if valor == "" and valor_atual is not None:
+            return valor_atual
+        return valor
 
-    def ler_dados_produto(self):
+    def ler_dados_produto(self, produto_existente=None):
         print(Fore.CYAN + Style.BRIGHT + "=== CADASTRO DE PRODUTO ===")
-        nome = input("Digite o nome do produto: ")
-        estoque = int(input("Digite a quantidade em estoque: "))
-        preco = float(input("Digite o preço do produto: "))
+        nome = self.ler_campo("Nome do produto", produto_existente.nome if produto_existente else None)
+        estoque = int(self.ler_campo("Quantidade em estoque", str(produto_existente.estoque) if produto_existente else None))
+        preco = float(self.ler_campo("Preço do produto", str(produto_existente.preco) if produto_existente else None))
         return nome, estoque, preco
 
     def ler_id(self):
-        return input("Digite o ID do produto")
-
-    def exibir_produto(self, produtos):
+        return input("Digite o ID do produto: ")
+    
+    def exibir_produtos(self, produtos):
         print(Fore.YELLOW + "\n--- TABELA DE PRODUTOS ---")
         if not produtos:
             print("Nenhum produto cadastrado")
             return
-        print(f"{'ID':<4} | {'Nome':<20} | {'Estoque':<7} | {'Preço':<10} | {'VALOR EM ESTOQUE':<16}")
-        print("-" * 69)
+        print(f"{'ID':<4} | {'NOME':<20} | {'ESTOQUE':<7} | {'PREÇO':<10} | {'VALOR EM ESTOQUE':<16}")
+        print("-"*69)
         for p in produtos:
-         print(f"{p.id:<4} | {p.nome:<20} | {p.estoque:<7} | {p.preco:<10.2f} | {p.valor_estoque:<16.2f}")
-         print("-"*69)
-
+            print(f"{p.id:<4} | {p.nome:<20} | {p.estoque:<7} | {p.preco:<10.2f} | {p.valor_estoque:<16.2f}")
+        print("-"*69)
+    
     def exibir_mensagem(self, mensagem, sucesso=True):
-        cor = Fore. GREEN   if sucesso else Fore.RED
+        cor = Fore.GREEN if sucesso else Fore.RED
         print(cor + f"\n[STATUS] {mensagem}\n")
+        self.aguardar_entrada()
 
-        
-
+    def aguardar_entrada(self):
+        input(Fore.WHITE + "Pressione Enter para continuar...")
 

@@ -1,4 +1,5 @@
 from colorama import init, Fore, Style
+from app.core.data_utils import Data_Utils
 
 init(autoreset=True)
 
@@ -35,10 +36,10 @@ class Clientes_Terminal_View:
         if not clientes:
             print("Nenhum Cliente Cadastrado")
             return
-        print(f"{'ID':<4} | {'NOME':<20} | {'email':<18}  | {'Idade':<2} | {'limite':<10.2f}")
+        print(f"{'ID':<4} | {'NOME':<20} | {'email':<18}  | {'DATA DE NASCIMENTO'} |{'Idade':<2} | {'limite':<10}")
         print("-"*100)
         for c in clientes:
-            print(f"{c.id:<4} | {c.nome:<20} | {c.email:<20} | {c.idade:<2} | {c.limite_credito:<10.2f}")
+            print(f"{c.id:<4} | {c.nome:<20} | {c.email:<20} | {Data_Utils.data_para_string(c.data_nascimento):<10} | {c.idade:<2} | {c.limite_credito:<10}")
 
 
     def exibir_mensagem(self, mensagem, sucesso=True): 

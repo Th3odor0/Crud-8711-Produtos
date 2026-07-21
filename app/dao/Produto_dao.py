@@ -1,49 +1,46 @@
 from app.dao.dao import DAO
 from app.models.Produto import Produto
-
-class Produto_dao(DAO):
+class Produto_DAO(DAO):
     def __init__(self, database):
-        self._database = database    
+        self._database = database
 
     def save(self, produto):
         conexao = self._database.conectar()
         cursor = conexao.cursor()
-        sql = """
-            INSERT INTO PRODUTO
-                (NOME, ESTOQUE, PRECO)
-                VALUES (%s, %s, %s)
+        sql =   """
+                    INSERT INTO PRODUTO
+                    (NOME, ESTOQUE, PRECO)
+                    VALUES (%s, %s, %s)
                 """
         cursor.execute(sql, (
-        produto.nome,
-        produto.estoque,
-        produto.preco
+            produto.nome,
+            produto.estoque,
+            produto.preco
         ))
-
         conexao.commit()
         produto.id = cursor.lastrowid
         self._database.desconectar(cursor, conexao)
         return produto
     
-
     def get_all(self):
         conexao = self._database.conectar()
         cursor = conexao.cursor()
-        sql = """
-                SELECT
-                ID,
-                NOME,
-                ESTOQUE,
-                PRECO
-            FROM
-                PRODUTO
-            ORDER BY
-                NOME
-            """
+        sql =   """
+                    SELECT
+                        ID,
+                        NOME,
+                        ESTOQUE,
+                        PRECO
+                    FROM
+                        PRODUTO
+                    ORDER BY 
+                        NOME
+                """
         cursor.execute(sql)
         registros = cursor.fetchall()
-        produto = []
+        produtos = []
         for registro in registros:
-            produto.append(
+            produtos.append(
                 Produto(
                     registro[0],
                     registro[1],
@@ -51,24 +48,23 @@ class Produto_dao(DAO):
                     registro[3]
                 )
             )
-            
         self._database.desconectar(cursor, conexao)
-        return produto
-
+        return produtos
+    
     def get_by_id(self, id):
         conexao = self._database.conectar()
         cursor = conexao.cursor()
-        sql = """
-                SELECT
-                ID,
-                NOME,
-                PRECO,
-                ESTOQUE
-            FROM
-                PRODUTO
-            WHERE
-                ID = %s
-            """
+        sql =   """
+                    SELECT
+                        ID,
+                        NOME,
+                        ESTOQUE,
+                        PRECO
+                    FROM
+                        PRODUTO
+                    WHERE
+                        ID = %s
+                """        
         cursor.execute(sql,(id,))
         registro = cursor.fetchone()
         self._database.desconectar(cursor, conexao)
@@ -80,23 +76,24 @@ class Produto_dao(DAO):
             registro[2],
             registro[3]
         )
-    
+
+
     def update(self, produto):
         conexao = self._database.conectar()
         cursor = conexao.cursor()
-        sql = """
-                UPDATE PRODUTO SET
-                    NOME    = %s,
-                    ESTOQUE = %s,
-                    PRECO   = %s
-                WHERE
-                    ID = %s
-        """
+        sql =   """
+                    UPDATE PRODUTO SET
+                        NOME    = %s,
+                        ESTOQUE = %s,
+                        PRECO   = %s
+                    WHERE
+                        ID = %s
+                """
         cursor.execute(sql,(
-                    produto.nome,
-                    produto.estoque,
-                    produto.preco,
-                    produto.id
+                                produto.nome,
+                                produto.estoque,
+                                produto.preco,
+                                produto.id
         ))
         conexao.commit()
         sucesso = cursor.rowcount > 0
@@ -106,10 +103,11 @@ class Produto_dao(DAO):
     def delete(self, id):
         conexao = self._database.conectar()
         cursor = conexao.cursor()
-        sql = """
-                DELETE FROM PRODUTO
-                WHERE ID = %s 
-        """
+        sql =   """
+                    DELETE FROM PRODUTO
+                    WHERE ID = %s
+                """
+        cursor.execute(sql,(id,))
         conexao.commit()
         sucesso = cursor.rowcount > 0
         self._database.desconectar(cursor, conexao)

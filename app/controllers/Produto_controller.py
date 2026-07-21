@@ -25,13 +25,13 @@ class Produto_Controller:
             
             elif opcao == 2:
                 produtos = self.dao.get_all()
-                self.view.exibir_produto(produtos)
+                self.view.exibir_produtos(produtos)
                 input("Pressione Enter para continuar...")
             
             elif opcao == 3:
                 try:
                     produtos = self.dao.get_all()
-                    self.view.exibir_produto(produtos)
+                    self.view.exibir_produtos(produtos)
                     id_produto = int(self.view.ler_id())
                     produto_existente = self.dao.get_by_id(id_produto)
                     if produto_existente:
@@ -48,7 +48,7 @@ class Produto_Controller:
             elif opcao == 4:
                 try:
                     produtos = self.dao.get_all()
-                    self.view.exibir_produto(produtos)
+                    self.view.exibir_produtos(produtos)
                     id_produto = int(self.view.ler_id())
                     sucesso = self.dao.delete(id_produto)
                     if sucesso:
