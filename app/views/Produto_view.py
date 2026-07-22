@@ -8,11 +8,11 @@ class Produto_Terminal_View:
     
     def renderizar_menu(self):
         print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
-        print(f"1 - Cadastrar produto")
-        print(f"2 - Listar produtos")
-        print(f"3 - Atualizar produto")
-        print(f"4 - Excluir produto")
-        print(f"0 - Sair")
+        print("1 - Cadastrar produto")
+        print("2 - Listar produtos")
+        print("3 - Atualizar produto")
+        print("4 - Excluir produto")
+        print("0 - Sair")
         print(Fore.CYAN + "="*50)
         try:
             return int(input("Escolha uma opção: "))

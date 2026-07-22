@@ -9,11 +9,11 @@ class Clientes_Terminal_View:
 
     def renderizar_menu(self):
         print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
-        print(f"1 - Cadastrar Clientes")
-        print(f"2 - Listar Clientes")
-        print(f"3 - Atulizar Cliente")
-        print(f"4 - Excluir Cliente")
-        print(f"0 - Sair")
+        print("1 - Cadastrar Clientes")
+        print("2 - Listar Clientes")
+        print("3 - Atulizar Cliente")
+        print("4 - Excluir Cliente")
+        print("0 - Sair")
         print(Fore.CYAN + "="*50)
         try:
             return int(input("Escolhe uma opção: "))
@@ -45,3 +45,6 @@ class Clientes_Terminal_View:
     def exibir_mensagem(self, mensagem, sucesso=True): 
         cor = Fore.GREEN if sucesso else Fore.RED
         print(cor + f"\n[STATUS] {mensagem}\n")
+
+    def aguardar_entrada(self):
+        input(Fore.WHITE + "Pressione Enter para continuar...")

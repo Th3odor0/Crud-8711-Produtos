@@ -9,11 +9,11 @@ class Usuario_Terminal_View:
     
     def renderizar_menu(self):
         print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
-        print(f"1 - Cadastrar usuário")
-        print(f"2 - Listar usuários")
-        print(f"3 - Atualizar usuário")
-        print(f"4 - Excluir usuário")
-        print(f"0 - Sair")
+        print("1 - Cadastrar usuário")
+        print("2 - Listar usuários")
+        print("3 - Atualizar usuário")
+        print("4 - Excluir usuário")
+        print("0 - Sair")
         print(Fore.CYAN + "="*50)
         try:
             return int(input("Escolha uma opção: "))
