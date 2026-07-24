@@ -9,11 +9,11 @@ class Clientes_Terminal_View:
 
     def renderizar_menu(self):
         print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
-        print(f"1 - Cadastrar Clientes")
-        print(f"2 - Listar Clientes")
-        print(f"3 - Atulizar Cliente")
-        print(f"4 - Excluir Cliente")
-        print(f"0 - Sair")
+        print("1 - Cadastrar Clientes")
+        print("2 - Listar Clientes")
+        print("3 - Atulizar Cliente")
+        print("4 - Excluir Cliente")
+        print("0 - Sair")
         print(Fore.CYAN + "="*50)
         try:
             return int(input("Escolhe uma opção: "))
@@ -36,12 +36,15 @@ class Clientes_Terminal_View:
         if not clientes:
             print("Nenhum Cliente Cadastrado")
             return
-        print(f"{'ID':<4} | {'NOME':<20} | {'email':<18}  | {'Idade':<2} | {'limite':<10.2f}")
+        print(f"{'ID':<4} | {'NOME':<20} | {'email':<18}  | {'DATA DE NASCIMENTO'} |{'Idade':<2} | {'limite':<10}")
         print("-"*100)
         for c in clientes:
-            print(f"{c.id:<4} | {c.nome:<20} | {c.email:<20} | {Data_Utils.data_para_string(c.idade):<2} | {c.limite_credito:<10.2f}")
+            print(f"{c.id:<4} | {c.nome:<20} | {c.email:<20} | {Data_Utils.data_para_string(c.data_nascimento):<10} | {c.idade:<2} | {c.limite_credito:<10}")
 
 
     def exibir_mensagem(self, mensagem, sucesso=True): 
         cor = Fore.GREEN if sucesso else Fore.RED
         print(cor + f"\n[STATUS] {mensagem}\n")
+
+    def aguardar_entrada(self):
+        input(Fore.WHITE + "Pressione Enter para continuar...")

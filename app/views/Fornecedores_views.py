@@ -8,11 +8,11 @@ class Fornecedores_Terminal_View:
 
     def renderizar_menu(self):
         print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
-        print(f"1 - Cadastrar Fornecedores")
-        print(f"2 - Listar Fornecedores")
-        print(f"3 - Atulizar Fornecedores")
-        print(f"4 - Excluir Fornecedores")
-        print(f"0 - Sair")
+        print("1 - Cadastrar Fornecedores")
+        print("2 - Listar Fornecedores")
+        print("3 - Atulizar Fornecedores")
+        print("4 - Excluir Fornecedores")
+        print("0 - Sair")
         print(Fore.CYAN + "="*50)
         try:
             return int(input("Escolhe uma opção: "))
