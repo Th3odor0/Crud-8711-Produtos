@@ -1,32 +1,29 @@
 from app.dao.dao import DAO
-from app.models.Estado import Estado
+from app.models.Cidade import Cidade
 
-class estado_dao(DAO):
+class cidade_dao(DAO):
     def __init__(self, database):
         self._database = database
 
-    def save(self, estado):
+    def save(self, cidade):
         conexao = self._database.conectar()
         cursor = conexao.cursor()
-        try:
-            sql =   """
-                    INSERT INTO ESTADO
-                    (NOME, SIGLA)
-                    VALUES (%s, %s)
-                """
-            cursor.execute(sql, (
-                estado._nome,
-                estado._sigla
-            ))
-            conexao.commit()
-            estado.id = cursor.lastrowid
-            return estado
-        except Exception as e:
-            conexao.rollback()
-            raise e
-        finally:
-            self.desconectar(cursor, conexao)
+        sql ="""
+                INSERT INTO CIDADE
+                (ID, NOME, ESTADO)
+                VALUES (%s, %s, %s)
+"""
 
+        cursor.execute(sql,(
+            cidade.id,
+            cidade.nome,
+            cidade.estado
+        ))
+        conexao.commit()
+        cidade.id = cursor.lastrowoid
+        self._database.desconectar(cursor, conexao)
+        return cidade
+    
 
     def get_all(self):
         conexao = self._database.conectar()
@@ -35,26 +32,26 @@ class estado_dao(DAO):
                 SELECT
                     ID,
                     NOME,
-                    SIGLA
-                FROM 
                     ESTADO
+                FROM
+                    CIDADE
                 ORDER BY
                     NOME
-"""
+""" 
         cursor.execute(sql)
         registros = cursor.fetchall()
-        estado = []
-        for regitro in registros:
-            estado.append(
-                Estado(
-                    regitro[0],
-                    regitro[1],
-                    regitro[2]
+        cidade = []
+        for registro in registros:
+            cidade.append(
+                Cidade(
+                    registro[0],
+                    registro[1],
+                    registro[2]
                 )
             )
         self._database.desconectar(cursor, conexao)
-        return estado
-
+        return cidade
+    
     def get_by_id(self, id):
         conexao = self._database.conectar()
         cursor = conexao.cursor()
@@ -62,48 +59,49 @@ class estado_dao(DAO):
                 SELECT
                     ID,
                     NOME,
-                    SIGLA
-                FROM 
                     ESTADO
+                FROM
+                    CIDADE
                 WHERE
                     ID = %s
 """
-        cursor.execute(sql,(id,))
+
+        cursor.execute(sql,(id))
         registro = cursor.fetchone()
         self._database.desconectar(cursor, conexao)
         if registro is None:
             return None
-        return Estado(
+        return Cidade(
             registro[0],
             registro[1],
             registro[2]
         )
-
-
-    def update(self, estado):
+    
+    def update(self, cidade):
         conexao = self._database.conectar()
         cursor = conexao.cursor()
         sql = """
-                    UPDATE ESTADO SET
-                    NOME = %s,
-                    SIGLA = %s
-                WHERE
-                    ID = %s
+                UPDATE CIDADE SET
+                NOME = %s,
+                ESTADO = %s
+            WHERE
+                ID = %s
 """
+
         cursor.execute(sql,(
-        estado.nome,
-        estado.sigla
+            cidade.nome,
+            cidade.estado
         ))
         conexao.commit()
         sucesso = cursor.rowcount > 0
         self._database.desconectar(cursor, conexao)
         return sucesso
-
+    
     def delete(self, id):
         conexao, cursor = self.conectar()
         try:
             sql = """
-                DELETE FROM ESTADO
+                DELETE FROM CIDADE
                 WHERE ID = %s
             """
             cursor.execute(sql, (id))
@@ -111,8 +109,7 @@ class estado_dao(DAO):
             sucesso = cursor.rowcount > 0
             return sucesso
         except Exception as e:
-            conexao.rollback()
-            raise e 
+            conexao.rolback()
+            raise e
         finally:
             self.desconectar(cursor, conexao)
-        

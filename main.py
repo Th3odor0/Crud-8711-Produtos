@@ -22,6 +22,13 @@ from app.dao.cliente_dao import cliente_dao
 from app.views.Clientes_views import Clientes_Terminal_View
 from app.controllers.Cliente_controller import Cliente_Controller
 
+# Componentes de Estado
+from app.dao.estado_dao import estado_dao
+from app.views.Estado_view import estado_terminal_view
+from app.controllers.Estado_controller import estado_controller
+
+
+
 class ErpApplication:
     def __init__(self):
         # Inicializa o colorama interno
@@ -40,7 +47,10 @@ class ErpApplication:
         self._ctrl_usuarios = Usuario_Controller(dao=self._dao_usuarios, view=Usuario_Terminal_View())        
 
         self._dao_clientes = cliente_dao(self._database)
-        self._ctrl_clientes = Cliente_Controller(dao=self._dao_clientes, view=Clientes_Terminal_View())   
+        self._ctrl_clientes = Cliente_Controller(dao=self._dao_clientes, view=Clientes_Terminal_View())
+
+        self._dao_estado = estado_dao(self._database)
+        self.ctrl_estado = estado_controller(dao=self._dao_estado, view=estado_terminal_view())   
 
     def _renderizar_menu_principal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -49,6 +59,7 @@ class ErpApplication:
         print("2 - Gerenciar Fornecedores")
         print("3 - Gerenciar Usuários")
         print("4 - Gerenciar Clientes")
+        print("5 - Gerenciar Estados")
         
         print("0 - Sair do Sistema")
         print(Fore.GREEN + "==================================")
@@ -72,6 +83,8 @@ class ErpApplication:
                 self._ctrl_usuarios.inicializar_sistema()    
             elif opcao == 4:
                 self._ctrl_clientes.inicializar_sistema()                               
+            elif opcao == 5:
+                self.ctrl_estado.inicializar_sistema()
             else:
                 print(Fore.RED + "\nOpção inválida!")
                 input(Fore.WHITE + "Pressione Enter para continuar...")
