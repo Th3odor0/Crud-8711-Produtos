@@ -1,118 +1,181 @@
 from app.dao.dao import DAO
-from app.models.Estado import Estado
+from app.models.estado import Estado
 
-class estado_dao(DAO):
+
+class Estado_DAO(DAO):
+
     def __init__(self, database):
-        self._database = database
+        super().__init__(database)
 
     def save(self, estado):
-        conexao = self._database.conectar()
-        cursor = conexao.cursor()
+
+        conexao, cursor = self.conectar()
+
         try:
-            sql =   """
+
+            sql = """
                     INSERT INTO ESTADO
-                    (NOME, SIGLA)
-                    VALUES (%s, %s)
-                """
-            cursor.execute(sql, (
-                estado._nome,
-                estado._sigla
-            ))
-            conexao.commit()
-            estado.id = cursor.lastrowid
-            return estado
-        except Exception as e:
-            conexao.rollback()
-            raise e
-        finally:
-            self.desconectar(cursor, conexao)
+                    (
+                        NOME,
+                        SIGLA
+                    )
+                    VALUES
+                    (
+                        %s,
+                        %s
+                    )
+                  """
 
-
-    def get_all(self):
-        conexao = self._database.conectar()
-        cursor = conexao.cursor()
-        sql = """
-                SELECT
-                    ID,
-                    NOME,
-                    SIGLA
-                FROM 
-                    ESTADO
-                ORDER BY
-                    NOME
-"""
-        cursor.execute(sql)
-        registros = cursor.fetchall()
-        estado = []
-        for regitro in registros:
-            estado.append(
-                Estado(
-                    regitro[0],
-                    regitro[1],
-                    regitro[2]
+            cursor.execute(
+                sql,
+                (
+                    estado.nome,
+                    estado.sigla
                 )
             )
-        self._database.desconectar(cursor, conexao)
-        return estado
 
-    def get_by_id(self, id):
-        conexao = self._database.conectar()
-        cursor = conexao.cursor()
-        sql = """
-                SELECT
-                    ID,
-                    NOME,
-                    SIGLA
-                FROM 
-                    ESTADO
-                WHERE
-                    ID = %s
-"""
-        cursor.execute(sql,(id,))
-        registro = cursor.fetchone()
-        self._database.desconectar(cursor, conexao)
-        if registro is None:
-            return None
-        return Estado(
-            registro[0],
-            registro[1],
-            registro[2]
-        )
-
-
-    def update(self, estado):
-        conexao = self._database.conectar()
-        cursor = conexao.cursor()
-        sql = """
-                    UPDATE ESTADO SET
-                    NOME = %s,
-                    SIGLA = %s
-                WHERE
-                    ID = %s
-"""
-        cursor.execute(sql,(
-        estado.nome,
-        estado.sigla
-        ))
-        conexao.commit()
-        sucesso = cursor.rowcount > 0
-        self._database.desconectar(cursor, conexao)
-        return sucesso
-
-    def delete(self, id):
-        conexao, cursor = self.conectar()
-        try:
-            sql = """
-                DELETE FROM ESTADO
-                WHERE ID = %s
-            """
-            cursor.execute(sql, (id))
             conexao.commit()
-            sucesso = cursor.rowcount > 0
-            return sucesso
-        except Exception as e:
+
+            estado.id = cursor.lastrowid
+
+            return estado
+
+        except Exception:
             conexao.rollback()
-            raise e 
+            raise
+
         finally:
             self.desconectar(cursor, conexao)
-        
+
+    def get_all(self):
+
+        conexao, cursor = self.conectar()
+
+        try:
+
+            sql = """
+                    SELECT
+                        ID,
+                        NOME,
+                        SIGLA
+                    FROM
+                        ESTADO
+                    ORDER BY
+                        NOME
+                  """
+
+            cursor.execute(sql)
+
+            registros = cursor.fetchall()
+
+            estados = []
+
+            for registro in registros:
+
+                estados.append(
+
+                    Estado(
+                        registro[0],
+                        registro[1],
+                        registro[2]
+                    )
+
+                )
+
+            return estados
+
+        finally:
+            self.desconectar(cursor, conexao)
+
+    def get_by_id(self, id):
+
+        conexao, cursor = self.conectar()
+
+        try:
+
+            sql = """
+                    SELECT
+                        ID,
+                        NOME,
+                        SIGLA
+                    FROM
+                        ESTADO
+                    WHERE
+                        ID = %s
+                  """
+
+            cursor.execute(sql, (id,))
+
+            registro = cursor.fetchone()
+
+            if registro is None:
+                return None
+
+            return Estado(
+                registro[0],
+                registro[1],
+                registro[2]
+            )
+
+        finally:
+            self.desconectar(cursor, conexao)
+
+    def update(self, estado):
+
+        conexao, cursor = self.conectar()
+
+        try:
+
+            sql = """
+                    UPDATE ESTADO
+                    SET
+                        NOME = %s,
+                        SIGLA = %s
+                    WHERE
+                        ID = %s
+                  """
+
+            cursor.execute(
+                sql,
+                (
+                    estado.nome,
+                    estado.sigla,
+                    estado.id
+                )
+            )
+
+            conexao.commit()
+
+            return cursor.rowcount > 0
+
+        except Exception:
+            conexao.rollback()
+            raise
+
+        finally:
+            self.desconectar(cursor, conexao)
+
+    def delete(self, id):
+
+        conexao, cursor = self.conectar()
+
+        try:
+
+            sql = """
+                    DELETE
+                    FROM ESTADO
+                    WHERE ID = %s
+                  """
+
+            cursor.execute(sql, (id,))
+
+            conexao.commit()
+
+            return cursor.rowcount > 0
+
+        except Exception:
+            conexao.rollback()
+            raise
+
+        finally:
+            self.desconectar(cursor, conexao)

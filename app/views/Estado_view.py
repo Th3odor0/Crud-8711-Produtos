@@ -1,48 +1,91 @@
 from colorama import init, Fore, Style
 
-
 init(autoreset=True)
 
-class estado_terminal_view:
-    def __init__(self):
-        self.titulo_sistema = "=== CRUD DE ESTADO (MVC) ==="
 
-    def renderizar_menu(Self):
-        print(Fore.CYAN + Style.BRIGHT + Self.titulo_sistema)
-        print("1 - Cadastrar Estados")
-        print("2 - Listar Estados")
-        print("3 - Atulizar Estados")
-        print("4 - Excluir Estado")
+class Estado_Terminal_View:
+
+    def __init__(self):
+        self.titulo_sistema = "=== CRUD DE ESTADOS (MVC) ==="
+
+    def renderizar_menu(self):
+
+        print(Fore.CYAN + Style.BRIGHT + self.titulo_sistema)
+        print("1 - Cadastrar estado")
+        print("2 - Listar estados")
+        print("3 - Atualizar estado")
+        print("4 - Excluir estado")
         print("0 - Sair")
-        print(Fore.CYAN + "="*50)
+        print(Fore.CYAN + "=" * 50)
+
         try:
-            return int(input("Escolhe uma opção: "))
+            return int(input("Escolha uma opção: "))
         except ValueError:
             return -1
-        
-    def ler_dados_estado(self):
-        print(Fore.CYAN + Style.BRIGHT + "=== CADASTRO DE ESTADO ===")
-        nome = input("Digite o nome: ")
-        sigla = input("Digite a sigla: ")        
-        return nome, sigla, 
-    
+
+    def ler_campo(self, rotulo, valor_atual=None):
+
+        if valor_atual is not None:
+            prompt = f"{rotulo} [{Fore.GREEN}{valor_atual}{Style.RESET_ALL}]: "
+        else:
+            prompt = f"{rotulo}: "
+
+        valor = input(prompt)
+
+        if valor == "" and valor_atual is not None:
+            return valor_atual
+
+        return valor
+
+    def ler_dados_estado(self, estado_existente=None):
+
+        print(Fore.CYAN + Style.BRIGHT + "=== DADOS DO ESTADO ===")
+
+        nome = self.ler_campo(
+            "Nome",
+            estado_existente.nome if estado_existente else None
+        )
+
+        sigla = self.ler_campo(
+            "Sigla",
+            estado_existente.sigla if estado_existente else None
+        )
+
+        return nome, sigla
+
     def ler_id(self):
-        return input("Digite o ID do Estado")
-    
-    def exibir_estado(self, estados):
+
+        return input("Digite o ID do estado: ")
+
+    def exibir_estados(self, estados):
+
         print(Fore.YELLOW + "\n--- TABELA DE ESTADOS ---")
+
         if not estados:
-            print("Nenhum Estado Cadastrado")
+            print("Nenhum estado cadastrado.")
             return
-        print(f"{'ID':<4} | {'NOME':<20} | {'SIGLA':<2}")
-        print("-"*100)
-        for e in estados:
-            print(f"{e.id:<4} | {e.nome:<20} | {e.sigla:<20} ")
 
+        print(f"{'ID':<5} | {'NOME':<30} | {'SIGLA':<5}")
+        print("-" * 48)
 
-    def exibir_mensagem(self, mensagem, sucesso=True): 
+        for estado in estados:
+
+            print(
+                f"{estado.id:<5} | "
+                f"{estado.nome:<30} | "
+                f"{estado.sigla:<5}"
+            )
+
+        print("-" * 48)
+
+    def exibir_mensagem(self, mensagem, sucesso=True):
+
         cor = Fore.GREEN if sucesso else Fore.RED
+
         print(cor + f"\n[STATUS] {mensagem}\n")
 
+        self.aguardar_entrada()
+
     def aguardar_entrada(self):
+
         input(Fore.WHITE + "Pressione Enter para continuar...")

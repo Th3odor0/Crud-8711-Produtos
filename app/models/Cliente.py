@@ -1,23 +1,26 @@
 from app.core.data_utils import Data_Utils
+from app.models.Cidade import Cidade
 
 class Cliente:
-    def __init__(self, id, nome, email, data_nascimento, limite_credito):
+    def __init__(self, id, nome, email, data_nascimento, limite_credito, cidade:Cidade):
         self.__id = id
         self._nome = nome
         self._email = email                     # Corrigido: email com email
         self._data_nascimento = data_nascimento # Corrigido: data com data
         self._limite_credito = limite_credito   # Corrigido: limite com limite
+        self._cidade = cidade
 
     def validar_limite_credito(self, limite_credito):
         if limite_credito < 0:
             raise ValueError("O limite não pode ser negativo")
         self._limite_credito = limite_credito
 
-    def atualizar_dados(self, novo_nome, novo_email, novo_limite, nova_data_nascimento):
+    def atualizar_dados(self, novo_nome, novo_email, novo_limite, nova_data_nascimento, nova_cidade):
         self._nome = novo_nome
         self._email = novo_email
         self._data_nascimento = nova_data_nascimento # Corrigido: data com nova_data
         self._limite_credito = novo_limite           # Corrigido: limite com novo_limite
+        self._cidade = nova_cidade
               
 
     @property
@@ -64,6 +67,13 @@ class Cliente:
     @property
     def idade(self):
         return Data_Utils.calcular_idade(self._data_nascimento)
-    
+
+    @property
+    def cidade(self):
+        return self._cidade
+
+    @cidade.setter
+    def cidade(self, nova_cidade):
+        self._cidade = nova_cidade
 
     
